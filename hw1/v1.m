@@ -10,7 +10,7 @@ function monte_carlo(n)
   F_x = sum(X.^a);
   v = mean(F_x <= c);
   delta = Q * sqrt(v * (1 - v) / n);
-  printf("%g %g %g\n", v, v - delta, v + delta);
+  printf("%g %g %g\n\n", v, v - delta, v + delta);
   printf("Delta is %g\n", delta);
 endfunction
 
