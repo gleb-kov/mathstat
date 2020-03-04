@@ -1,15 +1,11 @@
 pkg load statistics;
 
 function res = g(x)
-  res = sqrt(1 + x * x);
-endfunction
-
-function res = g1(x)
-  res = g(x) * sqrt(2 * pi * 2);
+  res = sqrt(1 + x ^ 2) * sqrt(2 * pi * 2);
 endfunction
 
 function res = f(x)
-  res = g(x) * exp(-(x + 2) ^ 2 / 4);
+  res = sqrt(1 + x ^ 2) * exp(-(x + 2) ^ 2 / 4);
 endfunction
 
 function calc_value(n)
@@ -18,7 +14,7 @@ function calc_value(n)
   y = 0.95;
   T = norminv((y + 1) / 2);
   X = normrnd(mu, sigma, 1, n);
-  F_x = arrayfun(@g1, X);
+  F_x = arrayfun(@g, X);
   v = mean(F_x);
   delta = (std(F_x) * T) / sqrt(n);
   printf("%g %g %g\n", v, v - delta, v + delta);
