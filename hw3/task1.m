@@ -4,7 +4,7 @@ n = 100;
 mu = 1;
 sigma = 1;
 
-t = (mu - 3 * sigma) : 0.5 : mu + 3 * sigma;
+t = mu - 3 * sigma : 0.5 : mu + 3 * sigma;
 F_x = normcdf(t, mu, sigma);
 
 X = sort(normrnd(mu, sigma, n, 1));
