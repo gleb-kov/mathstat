@@ -4,11 +4,8 @@ function p = test(n, a, b)
   m = 100;
   X = unifrnd(a, b, m, n);
   X = sort(X);
-  X_1 = X(1, :);
-  F_X_1 = unifcdf(X_1, a, b);
-  res = max(abs(F_X_1  - 1 / n), F_X_1);
-  for i=2:m
-    #printf("%d %d\n", edf_x(1, i), unifcdf(edf_x(1, i), a, b));
+  res = -1;
+  for i=1:m
     X_i = X(i, :);
     F_X_i = unifcdf(X_i, a, b);
     current_val = max(abs(F_X_i  - i / m), abs(F_X_i - (i - 1) / m));
@@ -16,7 +13,7 @@ function p = test(n, a, b)
   endfor
   gamma = 0.95;
   u_gamma = 1.36;
-  p = mean((sqrt(m) * res) > u_gamma)
+  p = mean((sqrt(m) * res) > u_gamma);
 endfunction 
 
 n = 100;
@@ -37,5 +34,5 @@ edf_y_minus = max(0, st_b - delta);
 edf_y_plus = min(1, st_b + delta);
 plot(df_x, df_y, st_a, st_b, st_a, edf_y_minus, st_a, edf_y_plus);
 
-test(10000, a, b);
-test(1000000, a, b);
+test(10000, a, b)
+test(1000000, a, b)

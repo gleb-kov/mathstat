@@ -30,5 +30,5 @@ u = 1.36;
 delta = u / sqrt(n);
 plot(a, b, t, F_x, a, max(b - delta, 0), a, min(b + delta, 1))
 
-test(10000, mu, sigma);
-test(1000000, mu, sigma);
+test(10000, mu, sigma)
+test(1000000, mu, sigma)
