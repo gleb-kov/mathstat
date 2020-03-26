@@ -1,15 +1,18 @@
 pkg load statistics
 
-function res = test(mu, sigma, n)
-    X = sort(normrnd(mu, sigma, n, 1));
-    dist = -1;
-    for i=1:n
-        X_i = X(i, 1);
+function p = test(n, mu, sigma)
+    m = 100;
+    X = sort(normrnd(mu, sigma, m, n));
+    res = -1;
+    for i=1:m
+        X_i = X(i, :);
         F_X_i = normcdf(X_i, mu, sigma);
-        current_val = max(abs(F_X_i  - i / n), abs(F_X_i - (i - 1) / n));
-        dist = max(dist, current_val);
+        current_val = max(abs(F_X_i  - i / m), abs(F_X_i - (i - 1) / m));
+        res = max(res, current_val);
     endfor
-    res = dist * sqrt(n);
+    gamma = 0.95;
+    u_gamma = 1.36;
+    p = mean((sqrt(m) * res) > u_gamma);
 endfunction
 
 n = 100;
@@ -24,14 +27,8 @@ F_n = 1 / n : 1 / n : 1;
 [a, b] = stairs(X, F_n);
 
 u = 1.36;
-delta = u / sqrt(n); % ? * T
+delta = u / sqrt(n);
 plot(a, b, t, F_x, a, max(b - delta, 0), a, min(b + delta, 1))
 
-total = 0;
-% kolmogorov
-for i=1:10^2
-    a = test(mu, sigma, 100);
-    if (a >= 0.95)
-        total += 1;
-    endif
-endfor
+test(10000, mu, sigma);
+test(1000000, mu, sigma);
