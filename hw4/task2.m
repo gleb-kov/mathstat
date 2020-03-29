@@ -1,10 +1,10 @@
 pkg load statistics
 
 n = 10 ^ 5;
-mu = 1;
-sigma = 1;
+a = 20;
+b = 80;
 
-X = normrnd(mu, sigma, n, 1);
+X = unifrnd(a, b, 1, n);
 
 l = min(X);
 r = max(X);
