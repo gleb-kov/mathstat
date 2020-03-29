@@ -4,20 +4,24 @@ n = 10 ^ 5;
 mu = 1;
 sigma = 1;
 
-X = normrnd(mu, sigma, n, 1);
+X = sort(normrnd(mu, sigma, n, 1));
 
 l = min(X);
 r = max(X);
 buckets = ceil((r - l) * n ^ (1 / 3));
 delta = (r - l) / buckets;
 x_coords = zeros(buckets, 1);
+cnt_in_bucket = zeros(buckets, 1);
 y_coords = zeros(buckets, 1);
+walls = zeros(buckets, 1);
 
-for i=1:buckets
-  cur_l = i * delta + l;
+for i = 1 : buckets
+  cur_l = (i - 1) * delta + l;
   cur_r = cur_l + delta;
+  walls(i) = cur_r;
   x_coords(i) = (cur_r + cur_l) / 2;
-  y_coords(i) = (sum(X <= cur_r) - sum(X < cur_l)) / (n * delta);
+  cnt_in_bucket(i) = sum(X <= cur_r) - sum(X < cur_l);
+  y_coords(i) = cnt_in_bucket(i) / (n * delta);
 endfor
 
 bar(x_coords, y_coords);
