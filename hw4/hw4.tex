@@ -8,7 +8,11 @@
 \usepackage[russian,english]{babel}
 \lstset{
     language=Octave,
-    frame=single
+    frame=single,
+    inputencoding=utf8x,
+    extendedchars=\true,
+    texcl=\false,
+    commentstyle={}
 }
 \usepackage[a4paper,top=1cm,bottom=2cm,left=1.5cm,right=1cm,marginparwidth=1.75cm]{geometry}
 
@@ -47,19 +51,15 @@
 \section{Программа 1}
 	Нормальное распределение.
 \subsection{Исходный код}
-        \begin{minipage}{\linewidth}
-            \lstinputlisting{task1.m}
-        \end{minipage}
+	\lstinputlisting{task1.m}
 \subsection{График}
-\includepdf[pages=-,pagecommand={},width=\textwidth]{normcdf.pdf}
+\includepdf[width=\textwidth]{normcdf.pdf}
 \section{Программа 2}
 	Равномерное распределение.
 \subsection{Исходный код}
-        \begin{minipage}{\linewidth}
-	    \lstinputlisting{task2.m}
-        \end{minipage}
+	\lstinputlisting{task2.m}
 \subsection{График}
-\includepdf[pages=-,pagecommand={},width=\textwidth]{unicdf.pdf}
+\includepdf[width=\textwidth]{unicdf.pdf}
 \section{Вывод}
 	TODO.
 \end{quote}
