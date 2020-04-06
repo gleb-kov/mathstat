@@ -37,7 +37,10 @@ for i = 1 : buckets
   y_coords(i) = cnt_in_bucket(i) / (n * delta);
 endfor
 
+x_coords_for_normpdf = -4:0.1:6;
 bar(x_coords, y_coords);
+hold on;
+plot(x_coords_for_normpdf, normpdf(x_coords_for_normpdf, mu, sigma), "linewidth", 1.5);
 
 printf("Размер выборки = %d\n", n);
 printf("Границы = [%d; %d]\n", l, r);

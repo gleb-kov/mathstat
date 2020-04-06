@@ -31,7 +31,10 @@ for i = 1 : buckets
   y_coords(i) = cnt_in_bucket(i) / (n * delta);
 endfor
 
+real_y = 1 / (b - a);
 bar(x_coords, y_coords);
+hold on;
+plot([a b], [real_y real_y], "linewidth", 1.5);
 
 printf("Размер выборки = %d\n", n);
 printf("Границы = [%d; %d]\n", l, r);
