@@ -34,7 +34,7 @@ endfor
 real_y = 1 / (b - a);
 bar(x_coords, y_coords);
 hold on;
-plot([a b], [real_y real_y], "linewidth", 1.5);
+plot([a b], [real_y real_y], "linewidth", 1);
 
 printf("Размер выборки = %d\n", n);
 printf("Границы = [%d; %d]\n", l, r);
