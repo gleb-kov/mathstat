@@ -1,6 +1,6 @@
 pkg load statistics
 
-function p = test_Kolmogorov(n, mu, sigma)
+function p = test(n, mu, sigma)
     m = 100;
     X = sort(normrnd(mu, sigma, m, n));
     res = -1;
@@ -13,20 +13,6 @@ function p = test_Kolmogorov(n, mu, sigma)
     gamma = 0.95;
     u_gamma = 1.36;
     p = mean((sqrt(m) * res) > u_gamma);
-endfunction
-
-function p = test_Smirnov(n, mu, sigma)
-    m = 100;
-    X = sort(normrnd(mu, sigma, m, n));
-    omega = 1 / (12 * m);
-    for i=1:m
-        X_i = X(i, :);
-        F_X_i = normcdf(X_i, mu, sigma);
-        omega += (F_X_i - (2 * i - 1) / (2 * m)) .^ 2;
-    endfor
-    gamma = 0.99;
-    w_gamma = 0.84;
-    p = mean(omega > w_gamma ^ 2);
 endfunction
 
 n = 100;
@@ -44,8 +30,5 @@ u = 1.36;
 delta = u / sqrt(n);
 plot(a, b, t, F_x, a, max(b - delta, 0), a, min(b + delta, 1))
 
-test_Kolmogorov(10000, mu, sigma)
-test_Kolmogorov(1000000, mu, sigma)
-
-test_Smirnov(10000, mu, sigma)
-test_Smirnov(1000000, mu, sigma)
+test(10000, mu, sigma)
+test(1000000, mu, sigma)
