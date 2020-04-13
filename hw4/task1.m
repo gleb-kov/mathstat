@@ -3,14 +3,12 @@ pkg load statistics
 clc;
 clear all;
 
-
 function res = test_Chi2_1(tests, n, m)
   res = 0;
-  for t = 1 : tests
-    mu = 1;
-    sigma = 1;
-    alpha = 0.95;
-
+  mu = 1;
+  sigma = 1;
+  alpha = 0.05;
+  for t = 1 : tests    
     X = sort(normrnd(mu, sigma, n, 1));
 
     l = min(X);
@@ -50,16 +48,15 @@ function res = test_Chi2_1(tests, n, m)
     # TODO: исправить подсчет значения chi2inv
     res = res + (hi2 < chi2inv(1 - alpha, m - 1));
   endfor
-  printf("Успешно %d из %d\n", res, tests);
+  printf("Для alpha = %d, успешно %d из %d\n", alpha, res, tests);
 endfunction
 
 function res = test_Chi2_2(tests, n, m)
   res = 0;
+  mu = 1;
+  sigma = 1;
+  alpha = 0.05;
   for t = 1 : tests
-    mu = 1;
-    sigma = 1;
-    alpha = 0.95;
-
     X = sort(normrnd(mu, sigma, n, 1));
 
     l = min(X);
@@ -119,7 +116,8 @@ function res = test_Chi2_2(tests, n, m)
     # TODO: исправить подсчет значения chi2inv
     res = res + (hi2 < chi2inv(1 - alpha, m - 1));
   endfor
-  printf("Успешно %d из %d\n", res, tests);
+  printf("Данные сгруппированы, чтобы выполнялось nj >= 6\n");
+  printf("Для alpha = %d, успешно %d из %d\n", alpha, res, tests);
 endfunction
 
 n = 10 ^ 6;
@@ -159,8 +157,10 @@ printf("\n");
 
 # PART 2
 
-test_Chi2_1(10 ^ 2, 10 ^ 4, m);
+test_Chi2_1(10 ^ 3, 10 ^ 4, m);
+
+printf("\n");
 
 # nj >= 6
-test_Chi2_2(10 ^ 2, 10 ^ 4, m);
+test_Chi2_2(10 ^ 3, 10 ^ 4, m);
 

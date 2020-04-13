@@ -3,11 +3,59 @@ pkg load statistics
 clc;
 clear all;
 
+function res = test_Chi2_1(tests, n, m)
+  res = 0;
+  a = 20;
+  b = 80;
+  alpha = 0.05;
+  for t = 1 : tests    
+    X = sort(unifrnd(a, b, n, 1));
+
+    l = min(X);
+    r = max(X);
+    
+    delta = (r - l) / m;
+    cnt_in_bucket = zeros(m, 1);
+    walls = zeros(m, 2);
+    for i = 1 : m
+      cur_l = (i - 1) * delta + l;
+      cur_r = cur_l + delta;
+      walls(i, 1) = cur_l;
+      walls(i, 2) = cur_r;
+      cnt_in_bucket(i) = sum(X <= cur_r) - sum(X < cur_l);
+    endfor
+
+    x_coords = zeros(m, 1);
+    for i = 1 : m
+      x_coords(i) = (walls(i, 2) + walls(i, 1)) / 2;
+    endfor
+    
+    #Выборочное среднее
+    E = sum(x_coords .* cnt_in_bucket) / n;
+    #Выборочная дисперсия
+    D = sum((x_coords - E) .^ 2 .* cnt_in_bucket) / n;
+    SQRT_D = sqrt(D);
+
+    P = zeros(m, 1);
+
+    for i = 1 : m
+      cur_l = walls(i, 1);
+      cur_r = walls(i, 2);
+      P(i) = unifcdf(cur_r, l, r) - unifcdf(cur_l, l, r);
+    endfor
+
+    hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
+    # TODO: исправить подсчет значения chi2inv
+    res = res + (hi2 < chi2inv(1 - alpha, m - 1));
+  endfor
+  printf("Для alpha = %d, успешно %d из %d\n", alpha, res, tests);
+endfunction
+
 n = 10 ^ 5;
+m = 100;
 a = 20;
 b = 80;
 alpha = 0.95;
-real_hi2 = 100734.7;
 
 X = sort(unifrnd(a, b, 1, n));
 
@@ -15,60 +63,31 @@ X = sort(unifrnd(a, b, 1, n));
 
 l = min(X);
 r = max(X);
-buckets = ceil((r - l) * n ^ (1 / 3));
-delta = (r - l) / buckets;
-x_coords = zeros(buckets, 1);
-cnt_in_bucket = zeros(buckets, 1);
-y_coords = zeros(buckets, 1);
-walls = zeros(buckets, 1);
+delta = (r - l) / m;
+x_coords = zeros(m, 1);
+cnt_in_bucket = zeros(m, 1);
+y_coords = zeros(m, 1);
 
-for i = 1 : buckets
+for i = 1 : m
   cur_l = (i - 1) * delta + l;
   cur_r = cur_l + delta;
-  walls(i) = cur_r;
   x_coords(i) = (cur_r + cur_l) / 2;
   cnt_in_bucket(i) = sum(X <= cur_r) - sum(X < cur_l);
   y_coords(i) = cnt_in_bucket(i) / (n * delta);
 endfor
 
 real_y = 1 / (b - a);
-bar(x_coords, y_coords);
+stairs(x_coords, y_coords);
 hold on;
 plot([a b], [real_y real_y], "linewidth", 1);
 
 printf("Размер выборки = %d\n", n);
 printf("Границы = [%d; %d]\n", l, r);
 printf("Выбранная длина интервалов = %d\n", delta);
-printf("Количество интервалов = %d\n", buckets);
+printf("Количество интервалов = %d\n", m);
 
 printf("\n");
 
 # PART 2
 
-E = sum(x_coords .* cnt_in_bucket) / n;
-D = sum((x_coords - E) .^ 2 .* cnt_in_bucket) / n;
-SQ_D = sqrt(D);
-
-printf("Предполагаемое матожидание = %d\n", E);
-printf("Предполагаемая дисперсия = %d\n", D);
-
-# suffix P means "Предполагаемое"
-aP = E - sqrt(3) * SQ_D;
-bP = E + sqrt(3) * SQ_D;
-fP = 1 / (bP - aP);
-
-printf("Предполагаемые границы = [%d; %d]\n", aP, bP);
-printf("Предполагаемое значение функции = %d\n", fP);
-
-nP = zeros(buckets, 1);
-nP(1) = n * fP * (walls(1) - aP);
-for i = 1 : buckets - 2
-  nP(i + 1) = n * fP * (walls(i + 1) - walls(i));
-endfor
-nP(buckets) = n * fP * (bP - walls(buckets - 1));
-
-hi2 = sum(((cnt_in_bucket - nP) .^ 2) ./ nP);
-
-printf("Полученное значение Хи квадрат = %d\n", hi2);
-printf("Теоретическое значение Хи квадрат = %d\n", real_hi2);
-printf("Заданное распределение есть равномерное = %d\n", hi2 < real_hi2);
+test_Chi2_1(10 ^ 3, 10 ^ 4, m);
