@@ -137,7 +137,7 @@ function res = test_Chi2_3(tests, n, m)
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 < chi2inv(1 - alpha, m - 1 - 2));
   endfor
-  printf("Возьмём данные из нормальное распределение и веротности из равномерного\n");
+  printf("Возьмём данные из нормального распределения и веротности из равномерного\n");
   printf("Тогда вероятность ошибки второго рода для alpha = %d, получается %d\n", alpha, res / tests);
 endfunction
 
