@@ -36,10 +36,10 @@ function res = test_Chi2_1(tests, n, m)
     endfor
 
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
-    res = res + (hi2 < chi2inv(1 - alpha, m - 1 - 2));
+    res = res + (hi2 >= chi2inv(1 - alpha, m - 1 - 2));
   endfor
   printf("Нормальное распределение проходит проверку гипотезы о нормальном распределении\n");
-  printf("Для alpha = %d, успешно %d из %d\n", alpha, res, tests);
+  printf("Для alpha = %d, вероятность ошибки первого рода получается %d\n", alpha, res / tests);
 endfunction
 
 function res = test_Chi2_2(tests, n, m)
@@ -95,11 +95,11 @@ function res = test_Chi2_2(tests, n, m)
     endfor
 
     hi2 = sum(((fixed_cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
-    res = res + (hi2 < chi2inv(1 - alpha, fixed_m - 1 - 2));
+    res = res + (hi2 >= chi2inv(1 - alpha, fixed_m - 1 - 2));
   endfor
   printf("Нормальное распределение проходит проверку гипотезы о нормальном распределении\n");
   printf("Данные сгруппированы, чтобы выполнялось nj >= 6\n");
-  printf("Для alpha = %d, успешно %d из %d\n", alpha, res, tests);
+  printf("Для alpha = %d, вероятность ошибки первого рода получается %d\n", alpha, res / tests);
 endfunction
 
 function res = test_Chi2_3(tests, n, m)
@@ -137,8 +137,8 @@ function res = test_Chi2_3(tests, n, m)
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 < chi2inv(1 - alpha, m - 1 - 2));
   endfor
-  printf("Нормальное распределение проходит проверку гипотезы о равномерном распределении\n");
-  printf("Для alpha = %d, успешно %d из %d\n", alpha, res, tests);
+  printf("Возьмём данные из нормальное распределение и веротности из равномерного\n");
+  printf("Тогда вероятность ошибки второго рода для alpha = %d, получается %d\n", alpha, res / tests);
 endfunction
 
 n = 10 ^ 6;
