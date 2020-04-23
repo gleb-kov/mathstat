@@ -49,7 +49,7 @@ function res = test_Chi2_2(tests, n, m, d)
     endfor
 
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
-    res = res + (hi2 >= chi2inv(1 - alpha, m - 1 - 2));
+    res = res + (hi2 < chi2inv(1 - alpha, m - 1 - 2));
   endfor
   printf("Uniform distribution satisfies the hypothesis about uniform distribution\n");
   printf("Left and right borders changed by %d\n", d)
@@ -87,14 +87,10 @@ test_Chi2_1(10 ^ 3, 10 ^ 4, m);
 
 printf("\n");
 
-test_Chi2_2(10 ^ 3, 10 ^ 4, m, 0.25);
+test_Chi2_2(10 ^ 3, 10 ^ 4, m, 0.05);
 
 printf("\n");
 
-test_Chi2_2(10 ^ 3, 10 ^ 4, m, 0.75);
-
-printf("\n");
-
-test_Chi2_2(10 ^ 3, 10 ^ 4, m, 1.5);
+test_Chi2_2(10 ^ 3, 10 ^ 4, m, 3);
 
 printf("\n");

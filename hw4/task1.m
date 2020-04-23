@@ -17,7 +17,7 @@ function res = test_Chi2_1(tests, n, m)
     delta = (r - l) / m;
     cnt_in_bucket = hist(X, m);
 
-    #Выборочное среднее
+   #Выборочное среднее
     E = mean(X);
     #Выборочная отклонение
     SQRT_D = std(X);
@@ -30,8 +30,8 @@ function res = test_Chi2_1(tests, n, m)
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 >= chi2inv(1 - alpha, m - 1 - 2));
   endfor
-  printf("Normal distribution satisfies the hypothesis about normal distribution\n")
-  printf("For alpha = %d, probability of type I error is %d\n", alpha, res / tests)
+  printf("Нормальное распределение проходит проверку гипотезы о нормальном распределении\n")
+  printf("Для alpha = %d, вероятность ошибки первого рода получается %d\n", alpha, res / tests)
 endfunction
 
 function res = test_Chi2_2(tests, n, m)
@@ -55,7 +55,7 @@ function res = test_Chi2_2(tests, n, m)
       walls(i, 2) = cur_r;
     endfor
 
-    #f means fixed, nj >= 6
+    # f_ в названии обозначает 'исправленность', то есть nj >= 6
     f_cnt_in_bucket = [];
     f_walls = [];
     f_m = 0;
@@ -82,9 +82,9 @@ function res = test_Chi2_2(tests, n, m)
     hi2 = sum(((f_cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 >= chi2inv(1 - alpha, f_m - 1 - 2));
   endfor
-  printf("Normal distribution satisfies the hypothesis about normal distribution\n")
-  printf("Sample grouped to met n_j >= 6\n")
-  printf("For alpha = %d, probability of type I error is %d\n", alpha, res / tests)
+  printf("Нормальное распределение проходит проверку гипотезы о нормальном распределении\n")
+  printf("Данные сгруппированы, чтобы выполнялось nj >= 6\n")
+  printf("Для alpha = %d, вероятность ошибки первого рода получается %d\n", alpha, res / tests)
 endfunction
 
 function res = test_Chi2_3(tests, n, m, d)
@@ -108,7 +108,7 @@ function res = test_Chi2_3(tests, n, m, d)
       walls(i, 2) = cur_r;
     endfor
 
-    #f means fixed, nj >= 6
+    # f_ в названии обозначает 'исправленность', то есть nj >= 6
     f_cnt_in_bucket = [];
     f_walls = [];
     f_m = 0;
@@ -135,9 +135,9 @@ function res = test_Chi2_3(tests, n, m, d)
     hi2 = sum(((f_cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 < chi2inv(1 - alpha, f_m - 1 - 2));
   endfor
-  printf("Normal distribution satisfies the hypothesis about normal distribution\n")
+  printf("Нормальное распределение проходит проверку гипотезы о нормальном распределении\n")
   printf("Выборочное среднее и выборочная дисперсия изменены на %d\n", d)
-  printf("For alpha = %d, probability of type II error is %d\n", alpha, res / tests)
+  printf("Для alpha = %d, вероятность ошибки второго рода получается %d\n", alpha, res / tests)
 endfunction
 
 n = 10 ^ 6;
@@ -158,9 +158,9 @@ bar(x_coords, y_coords / (n * delta));
 hold on;
 plot(x_coords_for_normpdf, normpdf(x_coords_for_normpdf, mu, sigma));
 
-printf("Sample size = %d\n", n)
-printf("Length of intervals = %d\n", delta)
-printf("Number of intervals = %d\n", m)
+printf("Размер выборки = %d\n", n)
+printf("Выбранная длина интервалов = %d\n", delta)
+printf("Количество интервалов = %d\n", m)
 
 printf("\n")
 
@@ -174,10 +174,10 @@ test_Chi2_2(10 ^ 3, 10 ^ 4, m);
 
 printf("\n")
 
-test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.005); #0.005
+test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.005);
 
 printf("\n")
 
-test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.05); #0.1
+test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.05);
 
 printf("\n")
