@@ -17,11 +17,6 @@ function res = test_Chi2_1(tests, n, m)
     delta = (r - l) / m;
     cnt_in_bucket = hist(X, m);
     
-    #Выборочное среднее
-    E = mean(X);
-    #Выборочная отклонение
-    SQRT_D = std(X);
-    
     P = [];
     for i = 1 : m
       P(i) = unifcdf(l + i * delta, l, r) - unifcdf(l + (i - 1) * delta, l, r);
@@ -34,7 +29,7 @@ function res = test_Chi2_1(tests, n, m)
   printf("Для alpha = %d, вероятность ошибки первого рода получается %d\n", alpha, res / tests);
 endfunction
 
-function res = test_Chi2_2(tests, n, m)
+function res = test_Chi2_2(tests, n, m, d)
   res = 0;
   a = 20;
   b = 80;
@@ -44,25 +39,21 @@ function res = test_Chi2_2(tests, n, m)
 
     l = min(X);
     r = max(X);
-
+    
     delta = (r - l) / m;
     cnt_in_bucket = hist(X, m);
     
-    #Выборочное среднее
-    E = mean(X);
-    #Выборочная отклонение
-    SQRT_D = std(X);
-
     P = [];
     for i = 1 : m
-      P(i) = normcdf(l + delta * i, E, SQRT_D) - normcdf(l + delta * (i - 1), E, SQRT_D);
+      P(i) = unifcdf(l + i * delta, l - d, r + d) - unifcdf(l + (i - 1) * delta, l - d, r + d);
     endfor
 
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
-    res = res + (hi2 < chi2inv(1 - alpha, m - 1 - 2));
+    res = res + (hi2 >= chi2inv(1 - alpha, m - 1 - 2));
   endfor
-  printf("Возьмём данные из равномерного распределения и вероятности из нормального\n");
-  printf("Тогда для alpha = %d, вероятность ошибки второго рода получается - %d\n", alpha, res / tests);
+  printf("Равномерное распределение проходит проверку гипотезы о равномерном распределении\n");
+  printf("Левая и правая граница изменены на %d\n", d)
+  printf("Для alpha = %d, вероятность ошибки второго рода получается %d\n", alpha, res / tests)
 endfunction
 
 n = 10 ^ 6;
@@ -92,10 +83,18 @@ printf("\n");
 
 # PART 2
 
-# Проверка 1
 test_Chi2_1(10 ^ 3, 10 ^ 4, m);
 
 printf("\n");
 
-# Проверка 2
-test_Chi2_2(10 ^ 2, 10 ^ 4, m);
+test_Chi2_2(10 ^ 3, 10 ^ 4, m, 0.25);
+
+printf("\n");
+
+test_Chi2_2(10 ^ 3, 10 ^ 4, m, 0.75);
+
+printf("\n");
+
+test_Chi2_2(10 ^ 3, 10 ^ 4, m, 1.5);
+
+printf("\n");
