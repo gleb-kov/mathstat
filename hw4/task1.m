@@ -133,7 +133,7 @@ function res = test_Chi2_3(tests, n, m, d)
     endfor
 
     hi2 = sum(((f_cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
-    res = res + (hi2 >= chi2inv(1 - alpha, f_m - 1 - 2));
+    res = res + (hi2 < chi2inv(1 - alpha, f_m - 1 - 2));
   endfor
   printf("Нормальное распределение проходит проверку гипотезы о нормальном распределении\n")
   printf("Выборочное среднее и выборочная дисперсия изменены на %d\n", d)
@@ -174,14 +174,10 @@ test_Chi2_2(10 ^ 3, 10 ^ 4, m);
 
 printf("\n")
 
-test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.005);
+test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.005); #0.005
 
 printf("\n")
 
-test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.01);
-
-printf("\n")
-
-test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.025);
+test_Chi2_3(10 ^ 3, 10 ^ 4, m, 0.05); #0.1
 
 printf("\n")
