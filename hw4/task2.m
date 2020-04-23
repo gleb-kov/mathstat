@@ -25,8 +25,8 @@ function res = test_Chi2_1(tests, n, m)
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 >= chi2inv(1 - alpha, m - 1 - 2));
   endfor
-  printf("Равномерное распределение проходит проверку гипотезы о равномерном распределении\n");
-  printf("Для alpha = %d, вероятность ошибки первого рода получается %d\n", alpha, res / tests);
+  printf("Uniform distribution satisfies the hypothesis about uniform distribution\n");
+  printf("For alpha = %d, probability of type I error is %d\n", alpha, res / tests);
 endfunction
 
 function res = test_Chi2_2(tests, n, m, d)
@@ -51,9 +51,9 @@ function res = test_Chi2_2(tests, n, m, d)
     hi2 = sum(((cnt_in_bucket - n .* P) .^ 2) ./ (n .* P));
     res = res + (hi2 >= chi2inv(1 - alpha, m - 1 - 2));
   endfor
-  printf("Равномерное распределение проходит проверку гипотезы о равномерном распределении\n");
-  printf("Левая и правая граница изменены на %d\n", d)
-  printf("Для alpha = %d, вероятность ошибки второго рода получается %d\n", alpha, res / tests)
+  printf("Uniform distribution satisfies the hypothesis about uniform distribution\n");
+  printf("Left and right borders changed by %d\n", d)
+  printf("For alpha = %d, probability of type II error is %d\n", alpha, res / tests)
 endfunction
 
 n = 10 ^ 6;
@@ -75,9 +75,9 @@ bar(x_coords, y_coords / (n * delta));
 hold on;
 plot([a b], [real_y real_y], "linewidth", 1);
 
-printf("Размер выборки = %d\n", n);
-printf("Выбранная длина интервалов = %d\n", delta);
-printf("Количество интервалов = %d\n", m);
+printf("Sample size = %d\n", n);
+printf("Length of intervals = %d\n", delta);
+printf("Number of intervals = %d\n", m);
 
 printf("\n");
 
