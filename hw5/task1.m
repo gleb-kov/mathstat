@@ -15,27 +15,15 @@ function count_risks(mu, sigma, n, m)
 
   risk3 = mean((X(1, :) + X(m, :)) / 2 - C1 * sigma ^ 2 / log(m))
 endfunction
-
-mu = 1;
-sigma = 3;
-n = 100; # кол-во выборок
-count_risks(mu, sigma, n, 100); 
-count_risks(mu, sigma, n, 10000); # меняем объём выборки 
 #}
 
 function count_risks(mu, sigma, n, m)
   C1 = 0.4;
   std1 = std2 = std3 = [];
-  for i = 1 : 10
+  for i = 1 : n
     X = sort(normrnd(mu, sigma, m, n));
+    med = median(X);
     std1(i) = std(mean(X));
-
-    if mod(m, 2) == 1
-      med = X(fix(m / 2) + 1, :);
-    else
-      med = (X(fix(m / 2), :) + X(fix(m / 2) + 1, :)) / 2;
-    endif
-
     std2(i) = std(med);
     std3(i) = std((X(1, :) + X(m, :)) / 2);
   endfor
