@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{pdfpages}
+\usepackage[russian,english]{babel}
+\lstset{
+    language=Octave,
+    frame=single,
+    inputencoding=utf8x,
+    extendedchars=\true,
+    texcl=\false,
+    breaklines=true,
+    breakatwhitespace=true,
+    commentstyle={}
+}
+\usepackage[a4paper,top=1cm,bottom=2cm,left=1.5cm,right=1cm,marginparwidth=1.75cm]{geometry}
+
+\makeatletter
+\def\@seccntformat#1{
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\begin{document}
+
+\selectlanguage{russian}
+\title{Лабораторная работа 5, ТВМС}
+\author{
+	Бочарников Андрей, M3238\\
+	Ковешников Глеб, M3238\\
+	Шишкин Алексей, M3238
+}
+\maketitle
+
+\begin{quote}
+\selectlanguage{russian}
+\section{Формулировка}
+	Для трёх распределений $X \thicksim N(a, \sigma^2)$, $X \thicksim N(!!, !!)$ и распределения Лапласа, сравнить следующие оценки параметра $a$:\\
+	1. \\
+	2. \\
+	3. \\
+	!! Сравнивать оценки нужно с точки зрения квадратичного риска. сравнить их выборочные среднеквадратичные отклонения. Cравнить с теоретическими среднеквадратичными отклонениями.
+\section{Входные данные}
+        \begin{itemize}
+            \item Объем выборки: $n_1 = 100, n_2 = 10000$
+            \item $\alpha = 1$
+	    \item ?? Параметры нормального распределения:
+	    \item ?? Параметры равномерного распределения:
+	    \item ?? Параметры распределения Лапласа: 
+	    \item Количество выборок: $m = 100$
+        \end{itemize}
+\section{Программа 1}	
+        Нормальное распределение. \\
+\subsection{Исходный код}
+	\lstinputlisting{task1.m}
+\subsection{Выходные данные}
+
+\section{Программа 2}
+	Равномерное распределение. \\
+\subsection{Исходный код}
+	\lstinputlisting{task2.m}
+\subsection{Выходные данные}
+
+\section{Программа 3}
+        Распределение Лапласа. \\
+\subsection{Исходный код}
+        \lstinputlisting{task3.m}
+\subsection{Выходные данные}
+	TODO: вывод о том какая из оценок с точки зрения квадратичного риска является наилучшей.
+\section{Вывод}
+\end{quote}
+\end{document}
