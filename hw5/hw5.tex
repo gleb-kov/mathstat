@@ -39,7 +39,7 @@
 \begin{quote}
 \selectlanguage{russian}
 \section{Формулировка}
-	Для трёх распределений $X \thicksim N(a, \sigma^2)$, $X \thicksim N(!!, !!)$ и распределения Лапласа, сравнить следующие оценки параметра $a$:\\
+	Для трёх распределений $X \thicksim N(a, \sigma^2)$, $X \thicksim U(a - \delta / 2, a + \delta / 2)$ и распределения Лапласа, сравнить следующие оценки параметра $a$:\\
 	1. \\
 	2. \\
 	3. \\
@@ -58,19 +58,47 @@
 \subsection{Исходный код}
 	\lstinputlisting{task1.m}
 \subsection{Выходные данные}
+\begin{tabular}{ | c | c | c | c | }
+\hline
+$X \thicksim N(a, \sigma^2), n = 100, m = 100$ & $\overline{X_n}$ & $med_n$ & $(x_1 + x_n) / 2$ \\ \hline
+$\sigma$ - теоретическое &  0.3 & 0.37599 & 0.88416 \\ \hline
+$\sigma$ - практическое & 0.26937 & 0.36922 & 0.87298 \\
+\hline
+\end{tabular}
 
+\begin{tabular}{ | c | c | c | c | }
+\hline
+$X \thicksim N(a, \sigma^2), n = 10000, m = 100$ & $\overline{X_n}$ & $med_n$ & $(x_1 + x_n) / 2$ \\ \hline
+$\sigma$ - теоретическое & 0.03 & 0.037599 & 0.62519 \\ \hline
+$\sigma$ - практическое & 0.028409 & 0.038104 & 0.64255 \\
+\hline
+\end{tabular}
 \section{Программа 2}
 	Равномерное распределение. \\
 \subsection{Исходный код}
 	\lstinputlisting{task2.m}
 \subsection{Выходные данные}
+\begin{tabular}{ | c | c | c | c | }
+\hline
+$X \thicksim U(a - \delta / 2, a + \delta / 2), n = 100, m = 100$ & $\overline{X_n}$ & $med_n$ & $(x_1 + x_n) / 2$ \\ \hline
+$\sigma$ - теоретическое & 0.28868 & 0.5 & 0.70711 \\ \hline
+$\sigma$ - практическое & 0.29632 & 0.47087 & 0.58035 \\
+\hline
+\end{tabular}
 
+\begin{tabular}{ | c | c | c | c | } 
+\hline
+$X \thicksim U(a - \delta / 2, a + \delta / 2), n = 10000, m = 100$ & $\overline{X_n}$ & $med_n$ & $(x_1 + x_n) / 2$ \\ \hline
+$\sigma$ - теоретическое & 0.028868 & 0.5 & 7.0711e-04 \\ \hline
+$\sigma$ - практическое & 0.027724 & 0.46644 & 7.4985e-04 \\
+\hline
+\end{tabular}
 \section{Программа 3}
         Распределение Лапласа. \\
 \subsection{Исходный код}
         \lstinputlisting{task3.m}
 \subsection{Выходные данные}
-	TODO: вывод о том какая из оценок с точки зрения квадратичного риска является наилучшей.
 \section{Вывод}
+	TODO: вывод о том какая из оценок с точки зрения квадратичного риска является наилучшей.
 \end{quote}
 \end{document}
