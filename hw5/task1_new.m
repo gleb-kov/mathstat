@@ -12,7 +12,7 @@ function count_risks(a, sigma, m, n)
   std2_theoretical = sqrt(pi) * sigma / sqrt(2 * n)
   
   std3 = std((X(1, :) + X(n, :)) / 2)
-  std3_theoretical = C1 * sigma / sqrt(log(n))
+  std3_theoretical = sqrt(C1) * sigma / sqrt(log(n))
   printf('\n');
 endfunction
 
