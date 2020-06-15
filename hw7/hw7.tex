@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{pdfpages}
+\usepackage[russian,english]{babel}
+\lstset{
+    language=Octave,
+    frame=single,
+    inputencoding=utf8x,
+    extendedchars=\true,
+    texcl=\false,
+    breaklines=true,
+    breakatwhitespace=true,
+    commentstyle={}
+}
+\usepackage[a4paper,top=1cm,bottom=2cm,left=1.5cm,right=1cm,marginparwidth=1.75cm]{geometry}
+
+\makeatletter
+\def\@seccntformat#1{
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\begin{document}
+
+\selectlanguage{russian}
+\title{ТВМС, Лабораторная работа 7, Вариант 10}
+\author{
+	Ковешников Глеб, M3238\\
+	kovg16@gmail.com
+}
+\maketitle
+
+\begin{quote}
+\selectlanguage{russian}
+\section{Формулировка}
+	\large Для случайной величины $X \thicksim P(\lambda)$, гипотезы $H_0:\lambda = \lambda_0 = 4$, альтернативы $H_1:\lambda > \lambda_0$, при $n = 400$ и $\overline{X_n} = 4.7$ построить доверительный интервал для $\alpha = 0.1$ и проверить гипотезу для $\gamma = 0.95$.
+\section{Входные данные}
+	\Large
+        \begin{itemize}
+		\item $t_{1 - \alpha} = t_{0.9} = 1.65$
+		\item $c_{\gamma} = c_{0.95} = 1.65$
+		\item $I(\lambda) = \frac{1}{\lambda} \Rightarrow I(\overline{\lambda}) = \frac{1}{4.7}$
+        \end{itemize}
+	\large
+\section{Доверительный интервал}	
+        Построим доверительный интервал: \\ \\
+	\Large
+	$I = \Biggl[\overline{\theta_n} - \frac{t_{1 - \alpha}}{\sqrt{nI(\theta_n)}} ; \overline{\theta_n} + \frac{t_{1 - \alpha}}{\sqrt{nI(\theta_n)}}\Biggr] = \Biggl[4.7 - \frac{1.65}{\sqrt{\frac{400}{4.7}}} ; 4.7 + \frac{1.65}{\sqrt{\frac{400}{4.7}}}\Biggr] = \bigl[4.52 ; 4.88\bigr]$ \\ \\ \\
+	$\lambda_0 \notin I$ \\ \\
+	\large
+	Таким образом, гипотеза отвергается.
+\subsection{Проверка гипотезы}
+	Воспользуемся критерием для правосторонней альтернативы: \\
+	\Large
+	\begin{equation*}
+		\psi^{*}_{n, \alpha} = 
+ 	\begin{cases}
+		1\text{, $\sqrt{nI(\theta_0)} \cdot (\overline{\theta_n} - \theta_0) \ge c_{\gamma}$}\\
+		0\text{, $\sqrt{nI(\theta_0)} \cdot (\overline{\theta_n} - \theta_0) < c_{\gamma}$}
+ 	\end{cases}
+	\end{equation*}
+	$\psi^{*}_{n, \alpha} = \bigl[\sqrt{nI(\theta_0)} \cdot (\overline{\theta_n} - \theta_0) \ge c_{\gamma}\bigr] = \bigl[6.46 \ge 1.65\bigr] = 1$ \\ \\
+	\large
+	Таким образом, гипотеза снова отвергается.
+\end{quote}
+\end{document}
