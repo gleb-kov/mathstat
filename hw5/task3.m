@@ -1,21 +1,20 @@
 pkg load statistics
 
-function count_risks(a, u, n, m)
+function count_risks(a, u, m, n)
   C2 = 0.9;
-  std1 = std2 = std3 = [];
-  for i = 1 : n
-    X = sort(laplace_rnd(m, n));
-    % X += u ???
-    med = median(X);
-    std1(i) = std(mean(X));
-    std2(i) = std(med);
-    std3(i) = std((X(1, :) + X(m, :)) / 2);
-  endfor
-  risk1 = mean((std1 -  u * sqrt(2) / sqrt(m)) .^ 2);
-  risk2 = mean((std2 - u / sqrt(m)) .^ 2);
-  risk3 = mean((std3 - sqrt(C2) * u) .^ 2);
-  printf("Risk1 = %d, risk2 = %d, risk3 = %d\n", risk1, risk2, risk3)
+  X = sort(a + exprnd(u, n, m) - exprnd(u, n, m));
+  med = median(X);
+  
+  std1_practical = std(mean(X))
+  std1_theoretical = sqrt(2) * u / sqrt(n)
+ 
+  std2_practical = std(med)
+  std2_theoretical = u / sqrt(n)
+  
+  std3_practical = std((X(1, :) + X(n, :)) / 2)
+  std3_theoretical = sqrt(C2) * u
+  printf('\n');
 endfunction
 
-count_risks(1, 3, 100, 100);  
-count_risks(1, 3, 100, 10000);  
+count_risks(1, 10, 100, 100);
+count_risks(1, 10, 100, 10000);
