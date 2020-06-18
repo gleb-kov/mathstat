@@ -1,0 +1,5 @@
+Real coefficients: 2.2, -3.2, 4.5
+Interpolated coefficients: 1.8132, -2.1471, 4.09307
+Scalar product : 1.7053e-13
+Real noise level : 3.7
+Calculated noise level : 3.30297

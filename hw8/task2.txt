@@ -1,0 +1,42 @@
+xmin = 1.3;
+xmax = 2.5;
+n = 60;
+c1 = 2.2;
+c2 = 1.5;
+s = 3.7;
+
+X = (xmin : (xmax - xmin) / (n - 1) : xmax)';
+Ys = c2 + c1 * X;
+Z = s * randn(n, 1);
+Y = Z + Ys;
+plot(X, Ys, X, Y, '+');
+
+xn = mean(X);
+yn = mean(Y);
+cov = (X - xn) '* (Y - yn) / (n - 1);
+b = cov / (std(X)^2);
+a = yn - b * xn;
+Yn = yn + b * (X - xn);
+
+m = 1;
+cn = polyfit(X, Y, m);
+Ynn = polyval(cn, X);
+plot(X, Y,'+', X, Ys, X, Yn, X, Ynn,'o');
+
+diff = Yn - Y;
+sProd = diff' * Yn;
+sn = sqrt(diff' * diff / (n - 2));
+
+ta = 1.96;
+ha = ta * (sn / sqrt(n));
+da = ha * (1 + (X - xn).^2 / (std(X)^2)).^(1/2);
+Yn1 = Yn - da;
+Yn2 = Yn + da;
+plot(X, Yn1, X, Yn2, X, Y,'o',X, Yn, X, Ys,'*');
+
+printf("Real coefficients: %d, %d\n", c1, c2);
+printf("Interpolated coefficients: %d, %d\n", cn(1), cn(2));
+printf("Interpolated coefficients with Matlab: %d, %d\n", b , a);
+printf("Scalar product: %d\n", sProd);
+printf("Read noise level: %d\n", s);
+printf("Calculated noise level: %d\n", sn);

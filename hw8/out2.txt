@@ -1,0 +1,6 @@
+Real coefficients: 2.2, 1.5
+Interpolated coefficients: 2.94447, 0.248198
+Interpolated coefficients with Matlab: 2.94447, 0.248198
+Scalar product: 1.11822e-12
+Read noise level: 3.7
+Calculated noise level: 3.91222
