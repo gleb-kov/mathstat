@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{kpfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{pdfpages}
+\usepackage[russian,english]{babel}
+\lstset{
+    language=Octave,
+    frame=single,
+    inputencoding=utf8x,
+    extendedchars=\true,
+    texcl=\false,
+    breaklines=true,
+    breakatwhitespace=true,
+    commentstyle={}
+}
+\usepackage[a4paper,top=1cm,bottom=2cm,left=1.5cm,right=1cm,marginparwidth=1.75cm]{geometry}
+
+\makeatletter
+\def\@seccntformat#1{
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\begin{document}
+
+\selectlanguage{russian}
+\title{ТВМС, Экзамен, Билет 1 (номер в ИСУ: 10)}
+\author{
+	Ковешников Глеб, M3238\\
+	kovg16@gmail.com
+}
+\maketitle
+
+\begin{quote}
+\selectlanguage{russian}
+\section{Вопрос 1}
+\large
+Вопрос: Функции потерь и функции риска, состоятельность оценки характеристики,
+  достаточное условие для состоятельности оценки. Вид квадратичного риска в случае
+  одномерной характеристики.\\
+
+Оценка $\hat{g}(\theta)$ -- статистика вида: $\hat{g} \colon \mathcal{X} \to g(\Theta)$.
+
+Функция потерь $l(\hat{g}, g(\theta))$ -- неотрицательная функция,
+характеризующая близость оценки к реальному значению.
+
+Принято считать функцию потерь неотрицательной монотонной функцией: \\
+$l(\hat{g}, g(\theta)) = \omega({\lVert}\hat{g}, g(\theta){\rVert})$, где $\omega(0) = 0$.
+
+Риск -- функция:
+$R(\hat{g}, \theta) \overset{def}{\underset{}{=}} E_{\theta}(l(\hat{g}, g(\theta)))$
+
+При асимптотическом подходе оценка называется состоятельной, если:\\
+$\hat{g}_n \xrightarrow[n \to +\infty]{P_{n, \theta}} g(\theta)$
+
+Квадратичная функция потерь:
+$l_2(\hat{g}, g(\theta)) = {\lVert}{\hat{g}, g(\theta)}{\rVert}^2$
+
+Квадратичный риск:
+$R_2(\hat{g}, \theta) = E_\theta({\lVert}{\hat{g}, g(\theta)}{\rVert}^2)$
+
+Определим функцию потерь индикатором отклонений:\\
+$l^\delta(\hat{g}, g(\theta)) = \omega^\delta({\lVert}{\hat{g}, g(\theta)}{\rVert})$
+\begin{equation*}
+  \omega(t) = 1_\delta(t) = \begin{cases}
+    0,~ t < \delta  \\
+    1,~ t \geqslant \delta
+  \end{cases}
+\end{equation*}
+
+Соответствующий риск будет вероятностью отклонения:\\
+$
+R^\delta(\hat{g}, \theta) = E_{\theta}(l(\hat{g}, g(\theta))) =
+0 \cdot P_\theta({\lVert}{\hat{g}, g(\theta){\rVert}} < \delta) +
+1 \cdot P_\theta({\lVert}{\hat{g}, g(\theta){\rVert}} \geqslant \delta) =
+P_\theta({\lVert}{\hat{g}, g(\theta)}{\rVert} \geqslant \delta)
+$\\
+
+Теорема (достаточное условие для состоятельности оценки):\\
+В случае одномерной оценки $R_2(\hat{g}_n, \theta) 
+\xrightarrow[n \to +\infty]{} 0 \Longrightarrow$ оценка состоятельна.\\
+Доказательство:\\
+$
+\forall \delta > 0~ R^\delta(\hat{g}_n, \theta)
+= P({\lVert}{\hat{g}_n - g(\theta)}{\rVert} \geqslant \delta) =
+P({\lVert}{\hat{g}_n - g(\theta)}^2{\rVert} \geqslant \delta^2)  \\
+\leqslant \frac{E_\theta({\lVert}{\hat{g}_n - g(\theta)}^2{\rVert})}{\delta^2} =
+\frac{R_2(\hat{g}_n, \theta)}{\delta^2} \xrightarrow[n \to +\infty]{} 0
+$
+\\ Ч.Т.Д. \\
+
+Смещение оценки -- величина: $b(\hat{g}, \theta) = g(\theta) - E_\theta(\hat{g})$
+
+Оценка несмещенная, если смещение равно $0$.\\
+
+Теорема (вид квадратичного риска):\\
+$R_2(\hat{g}, \theta) = D_\theta(\hat{g}) + b^2(\hat{g}, \theta)$ \\
+Доказательство: \\
+$
+R_2(\hat{g}, \theta) = E_\theta({\lVert}{\hat{g} - g(\theta)}^2{\rVert}) \\
+= E_\theta(\hat{g} - E_\theta(\hat{g}) - (g(\theta) - E_\theta(\hat{g})))^2 \\
+= E_\theta(\hat{g} - E_\theta(\hat{g}))^2 + (g(\theta) -
+E_\theta(\hat{g}))^2 - 2(g(\theta) - E_\theta(\hat{g}))(E_\theta{\hat{g}} - E_\theta{\hat{g}}) \\
+= D_\theta(\hat{g}) + b^2(\hat{g}, \theta)
+$ 
+\\ Ч.Т.Д.\\
+
+Для несмещенных оценок квадратичный риск равен дисперсии.
+\section{Вопрос 2}
+Вопрос: Гистограмма как оценка плотности распределения. Статистические свойства гистограммы. \\
+
+Зададим плотность распределения в точке $t$ как
+$f(t) \approx \frac{P(\Delta)}{|\Delta|}$, где
+$\Delta = [t_1, t_2) \ni t$;
+$t_1, t_2$ -- соседние точки разбиения отрезка $[a, b]$;
+$|\Delta| = t_2 - t_1$.
+
+Интервалы группировки -- разбиение
+$\{\,\Delta_0, \Delta_{\pm 1}, \Delta_{\pm 2}, \ldots\,\}$ отрезка
+$[a, b]$ на дизъюнктные интервалы фиксированной длины $> 0$.
+
+Гистограмма -- функция $f_n(t)$, принимающая постоянные значения на заданных интервалах группировки:
+$t \in \Delta_m \Longrightarrow f_{n}(t) = f_{n, m} = \frac{k(\Delta_m)}{nh}$,\\
+где $k(\Delta)$ -- количество элементов выборки, лежащих в отрезке $\Delta$.
+
+Гистограмма является кусочно-постоянной функцией.\\
+
+Теорема. Гистограмма является плотностью распределения.\\
+Доказательство:\\
+1. $f_n(t) \geqslant 0$
+
+2. $\int\limits_{\mathbb{R}}{f_n(t) dt}$
+$= \sum_{m}{\int\limits_{\Delta_m}{f_{n}(t) dt}} =
+        \sum_{m}{h f_{n, m}} = n^{-1} \sum_m{k(\Delta_m)} = 1$.
+\\ Ч.Т.Д. \\
+
+Теорема. Пусть задано абсолютно непрерывное распределение с плотностью $f(x)$,
+отрезок $[a, b]$ и его разбиение с длинами интервалов $h_n$ такими,
+чтобы выполнялись условия:\\
+$h_n \xrightarrow[n \to +\infty]{} 0,~ nh_n \xrightarrow[n \to +\infty]{} +\infty$, \\
+тогда соответствующая гистограмма является состоятельной оценкой плотности распределения.
+\section{Задача}
+Формулировка: найти ОМП параметра $u$ показательного распределения. \\
+Решение:
+\begin{equation*}
+f(t, u) = 
+ \begin{cases}
+   1, $t < 0$ \\
+   \frac{1}{u} \cdot \exp{\frac{-t}{u}}, $t >= 0$
+ \end{cases}
+\end{equation*}
+$L(u, x_1, ..., x_n) = \prod_{i = 1}^n{f(x_i, u)} = \prod_{i = 1}^n{\frac{1}{u}\exp{\frac{-x_i}{u}}} =
+  \frac{1}{u^n}\exp{\frac{-\sum_{i = 1}^{n}{x_i}}{u}}$
+
+$l(u, x_1, ..., x_n) = \ln{\prod_{i = 1}^n{f(x_i, u)}} = -n\ln{(u)} - \frac{\sum_{i = 1}^{n}{x_i}}{u}$
+
+$\frac{dl}{du} = \frac{-n}{u} + \frac{\sum_{i = 1}^{n}{x_i}}{u^2}$
+
+$\frac{dl}{du} = 0 \Longrightarrow un = \sum_{i = 1}^{n}{x_i} \Longrightarrow u^{*}_n = \overline{X_n}$,
+где $u^{*}_n$ -- стационарная точка логарифмической функции правдоподобия.
+
+Проверим достаточное условие максимума (вторая производная $ < 0$): \\
+$\frac{d^2l}{du^2}(\overline{X_n}) = \frac{n}{u^2} - \frac{2un}{u^3} = \frac{-n}{u^2} < 0$.
+
+$\Longrightarrow u^{*}_n = \overline{X_n}$ -- точка максимума функции правдоподобия.\\
+Ответ: ОМП параметра $u$ имеет вид $u^{*}_n = \overline{X_n}$.
+
+\end{quote}
+\end{document}
